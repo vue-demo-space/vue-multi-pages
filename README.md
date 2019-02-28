@@ -73,6 +73,7 @@ vue 多页核心无非是配置多个 webpack 入口，vue cli3 让这变的更�
 
 有些人可能喜欢 `demo0/index.html` 以及 `demo1/about/index.html` 和 `/demo1/index/index.html` 这样的生成结构，都是可以的，**只是到时 nginx 配置上有些许差异而已**（我这样设计会导致配置复杂点）
 
+
 ## 配置
 
 vue.config.js 配置：
@@ -102,7 +103,7 @@ module.exports = {
 }
 ```
 
-甚至我们连 template 都可以不配置，因为 @vue/cli-service 贴心地为什么提供了 default template（可以删除我们的配置，然后 `vue inspect > output.js` 倒出进行配置查看）
+甚至我们连 template 都可以不配置，因为 @vue/cli-service 贴心地为什么提供了 default template（可以删除我们的配置，然后 `vue inspect > output.js` 导出进行配置查看）
 
 当然如果多项目的话一个一个列出来太繁琐了，我们可以用程序去做（程序因每个人的目录结构而异）：
 
@@ -206,7 +207,7 @@ rewrite ^(/(.+))/$ $1 permanent;
 
 然后用 http-server 起个 server，打开它看到地址是 <http://127.0.0.1:8081/a/>，可能会是一个原因
 
-为啥会自动添加 `/`，还需要后续研究
+为啥会自动添加 `/`，还需要后续研究，这是另外一个问题了，这里不讨论
 
 最后的 nginx 配置如下：
 
@@ -230,5 +231,5 @@ server {
 }
 ```
 
-其实对于 demo1 来说，url 上完全可以带上 \.html 的后缀，因为其本身就是一个个 html 单页面
+**其实对于 demo1 来说，url 上完全可以带上 \.html 的后缀，因为其本身就是一个个 html 单页面**
 
