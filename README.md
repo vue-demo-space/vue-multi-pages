@@ -233,3 +233,29 @@ server {
 
 **其实对于 demo1 来说，url 上完全可以带上 \.html 的后缀，因为其本身就是一个个 html 单页面**
 
+---
+
+研究了一下上述 trailing slash 的问题，可解：
+
+```nginx
+server {
+  listen 80;
+  server_name www.test.com;
+  location / {
+    root /Users/fish/github/demo-space/vue-multi-pages/dist;
+    index  index.html index.htm;
+
+    # 强行不要 url 地址最后的 /
+    rewrite ^(/(.+))/$ $1 permanent;
+
+    # /demo1 会 301 到 /demo1/
+    # remove trailing slash
+    # $uri/index.html 必须在 $uri/ 前，不然还是会先匹配 $uri/，然后 301
+    try_files $uri $uri/index.html $uri/ $uri.html @router;
+  }
+  location @router {
+    # spa 页面指向根路径 
+    rewrite ^(/(.+?))/ $1 last;
+  }
+}
+```
