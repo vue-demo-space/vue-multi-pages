@@ -6,7 +6,8 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // 关键！
+  base: '/demo0/',
   routes: [
     {
       path: '/',
